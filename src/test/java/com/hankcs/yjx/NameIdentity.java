@@ -39,6 +39,44 @@ public class NameIdentity {
 			System.out.println(terms);
 		}
 		
+//		11. 日本人名识别
+//		目前标准分词器默认关闭了日本人名识别，用户需要手动开启；这是因为日本人名的出现频率较低，但是又消耗性能。
+		String[] testCase2 = new String[] {
+				  "北川景子参演了林诣彬导演的《速度与激情3》",
+			        "林志玲亮相网友:确定不是波多野结衣？",
+		};
+		Segment segment3 = HanLP.newSegment().enableJapaneseNameRecognize(true);
+		for(String sentence:testCase2) {
+			List<Term> terms = segment3.seg(sentence);
+			System.out.println(terms);
+		}
+		
+//		12. 地名识别
+//		目前标准分词器都默认关闭了地名识别，用户需要手动开启；这是因为消耗性能，其实多数地名都收录在核心词典和用户自定义词典中。
+//		在生产环境中，能靠词典解决的问题就靠词典解决，这是最高效稳定的方法。
+//		建议对命名实体识别要求较高的用户使用感知机词法分析器。
+		String[] testCase4 = new String[] {
+				 "武胜县新学乡政府大楼门前锣鼓喧天",
+			        "蓝翔给宁夏固原市彭阳县红河镇黑牛沟村捐赠了挖掘机",
+		};
+		Segment segment4 = HanLP.newSegment().enablePlaceRecognize(true);
+		for(String sentence:testCase4) {
+			List<Term> terms = segment4.seg(sentence);
+			System.out.println(terms);
+		}
+		
+//		13. 机构名识别
+		String[] testCase5 = new String[]{
+			    "我在上海林原科技有限公司兼职工作，",
+			    "我经常在台川喜宴餐厅吃饭，",
+			    "偶尔去地中海影城看电影。",
+			};
+		Segment segment5 = HanLP.newSegment().enableOrganizationRecognize(true);
+		for(String sentence:testCase5) {
+			List<Term> terms = segment5.seg(sentence);
+			System.out.println(terms);
+		}
+		
 	}
 
 }
